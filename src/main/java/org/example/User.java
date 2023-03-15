@@ -42,6 +42,7 @@ class User {
         }
     }
 
+    //search movies by different features (m stand for movies)
     public ArrayList<Movie> searchmByTitle(String title) {
         ArrayList<Movie> result=new ArrayList<Movie>();
         for(int i=0;i<favoriteMovies.size();i++){
@@ -115,6 +116,8 @@ class User {
         }
     }
 
+
+    //search tv shows by different features (t stands for tv shows)
     public ArrayList<TVShow> searchtByTitle(String title) {
         ArrayList<TVShow> result=new ArrayList<TVShow>();
         for(int i=0;i<favoriteTVshows.size();i++){
@@ -189,6 +192,7 @@ class User {
         }
     }
 
+    //add a tv show to favorites
     public void addToFavoritest(TVShow show) {
         Scanner scan=new Scanner(System.in);
         if(!favoriteTVshows.contains(show)) {
@@ -205,11 +209,13 @@ class User {
         }
     }
 
+    //remove a tv show from favorites
     public void removeFavoritest(TVShow show) {
         favoriteTVshows.remove(show);
         System.out.println(show.getTitle() + " removed from your favorites");
     }
 
+    //add a movie to favorites
     public void addToFavoritesm(Movie movie) {
         Scanner scan=new Scanner(System.in);
         if(!favoriteMovies.contains(movie)) {
@@ -226,11 +232,13 @@ class User {
         }
     }
 
+    //remove a movie from favorites
     public void removeFavoritesm(Movie movie) {
         favoriteMovies.remove(movie);
         System.out.println(movie.getTitle() + " removed from your favorites");
     }
 
+    //prints favorite shows and movies
     public void viewFavorites() {
         System.out.println("favorite tv shows:");
         for(int i=0;i<favoriteTVshows.size();i++){
@@ -245,6 +253,7 @@ class User {
 
     }
 
+    //likes a movie
     public void like(String name){
         Scanner scan=new Scanner(System.in);
 
@@ -264,6 +273,7 @@ class User {
         }
     }
 
+    //dislikes a movie
     public void dislike(String name){
         Scanner scan=new Scanner(System.in);
 
@@ -283,6 +293,8 @@ class User {
         }
     }
 
+    //*METHODS INVOLVED IN RECOMMENDATION*
+    //creates a list of every genre appeared in your favorites
     public ArrayList<String> favoriteGenres() {
         ArrayList<String> favGenres = new ArrayList<String>();
 
@@ -305,6 +317,7 @@ class User {
         }
     }
 
+    //returns name of a movie in your favorites with a certain genre
     public String favoriteMovieWithGenre(String genre){
         for(int i=0;i<favoriteMovies.size();i++){
             if(favoriteMovies.get(i).getGenre().equals(genre)){
@@ -321,6 +334,7 @@ class User {
         return null;
     }
 
+    //main method of recommendation
     public void getRecommendations(NetflixService service) {;
         ArrayList<String> genres=favoriteGenres();
 
@@ -337,6 +351,7 @@ class User {
         }
     }
 
+    // .contains didn't work for some reason so i wrote this
     public boolean contain(ArrayList<String> list,String name){
         for(int i=0;i<list.size();i++){
             if(list.get(i).equals(name)){
@@ -347,30 +362,7 @@ class User {
         return false;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setFavoriteTVshows(ArrayList<TVShow> favoriteTVshows) {
-        this.favoriteTVshows = favoriteTVshows;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public ArrayList<TVShow> getFavoriteTVshows() {
-        return favoriteTVshows;
-    }
-
+    //removes watched movies from recommendation list
     public void removeSharedMovies(ArrayList<Movie> recom, ArrayList<TVShow> watched){
         for(int i=0;i<recom.size();i++){
             if (watched.contains(recom.get(i))){
@@ -379,6 +371,7 @@ class User {
         }
     }
 
+    //removes watched shows from recommendation list
     public void removeSharedShows(ArrayList<TVShow> recom,ArrayList<TVShow> watched){
         for(int i=0;i<recom.size();i++){
             if (watched.contains(recom.get(i))){
@@ -399,4 +392,21 @@ class User {
         }
     }
 
+    //SETTERS
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    //GETTERS
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 }

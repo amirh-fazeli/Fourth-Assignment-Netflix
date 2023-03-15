@@ -66,10 +66,6 @@ class NetflixService {
         return false;
     }
 
-    public void logout() {
-        // Implement logout logic here
-    }
-
     public ArrayList<TVShow> searchtByTitle(String title) {
         ArrayList<TVShow> result=new ArrayList<TVShow>();
 
@@ -228,8 +224,7 @@ class NetflixService {
             }
         }
 
-        //        -1 indicates that the user doesn't exist in the library
-
+        //-1 indicates that the user doesn't exist in the library
         return -1;
     }
 
@@ -240,8 +235,7 @@ class NetflixService {
             }
         }
 
-        //        -1 indicates that the show doesn't exist in the library
-
+        //-1 indicates that the show doesn't exist in the library
         return -1;
     }
 
@@ -252,8 +246,7 @@ class NetflixService {
             }
         }
 
-        //        -1 indicates that the movie doesn't exist in the library
-
+        //-1 indicates that the movie doesn't exist in the library
         return -1;
     }
 
@@ -271,7 +264,6 @@ class NetflixService {
 
     public User searchUser(String username){
         int ind=userIndex(username);
-
         return userList.get(ind);
     }
 }

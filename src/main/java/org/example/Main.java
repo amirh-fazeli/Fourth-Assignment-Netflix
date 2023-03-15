@@ -28,78 +28,7 @@ public class Main {
             switch (role) {
 
                 case 1:
-                    k = true;
-                    while (k) {
-                        System.out.println("what do you want to do? \n 1.add a movie \n2.remove a movie");
-                        System.out.println("3.add a tv show \n4.remove a tv show \n5.exit");
-
-                        System.out.println("insert an number: ");
-                        int choice = Integer.valueOf(scan.nextLine());
-
-                        switch (choice) {
-                            case 1:
-                                while (true) {
-                                    service.addMovie(inputMovie());
-
-                                    System.out.println("do you want to add another movie? yes/no");
-
-                                    String ch = scan.nextLine();
-
-                                    if (!ch.equals("yes")) {
-                                        break;
-                                    }
-
-                                }
-                                break;
-
-                            case 2:
-                                while (true) {
-                                    System.out.println("insert name of the movie you want to remove: ");
-                                    service.removeMovie(scan.nextLine());
-
-                                    System.out.println("do you want to remove another movie? yes/no");
-                                    String ch = scan.nextLine();
-
-                                    if (!ch.equals("yes")) {
-                                        break;
-                                    }
-                                }
-                                break;
-
-                            case 3:
-                                while (true) {
-                                    System.out.println("insert name of the TV show you want to add: ");
-                                    service.addTVShow(inputShow());
-
-                                    System.out.println("do you want to add another show? yes/no");
-                                    String ch = scan.nextLine();
-
-                                    if (!ch.equals("yes")) {
-                                        break;
-                                    }
-                                }
-                                break;
-
-                            case 4:
-                                while (true) {
-                                    System.out.println("insert name of the TV show you want to remove: ");
-                                    service.removeTVShow(scan.nextLine());
-
-                                    System.out.println("do you want to check another book? yes/no");
-                                    String ch = scan.nextLine();
-
-                                    if (!ch.equals("yes")) {
-                                        break;
-                                    }
-                                }
-                                break;
-
-                            case 5:
-                                k = false;
-                                break;
-                        }
-                    }
-
+                    adminMenu(service);
                     break;
 
 
@@ -137,10 +66,85 @@ public class Main {
 
                         }
                     }
-
                     break;
             }
         }
+    }
+
+    public static void adminMenu(NetflixService service){
+        boolean k = true;
+        Scanner scan=new Scanner(System.in);
+        while (k) {
+            System.out.println("what do you want to do? \n1.add a movie \n2.remove a movie");
+            System.out.println("3.add a tv show \n4.remove a tv show \n5.exit");
+
+            System.out.println("insert an number: ");
+            int choice = Integer.valueOf(scan.nextLine());
+
+            switch (choice) {
+                case 1:
+                    while (true) {
+                        service.addMovie(inputMovie());
+
+                        System.out.println("do you want to add another movie? yes/no");
+
+                        String ch = scan.nextLine();
+
+                        if (!ch.equals("yes")) {
+                            break;
+                        }
+
+                    }
+                    break;
+
+                case 2:
+                    while (true) {
+                        System.out.println("insert name of the movie you want to remove: ");
+                        service.removeMovie(scan.nextLine());
+
+                        System.out.println("do you want to remove another movie? yes/no");
+                        String ch = scan.nextLine();
+
+                        if (!ch.equals("yes")) {
+                            break;
+                        }
+                    }
+                    break;
+
+                case 3:
+                    while (true) {
+                        System.out.println("insert name of the TV show you want to add: ");
+                        service.addTVShow(inputShow());
+
+                        System.out.println("do you want to add another show? yes/no");
+                        String ch = scan.nextLine();
+
+                        if (!ch.equals("yes")) {
+                            break;
+                        }
+                    }
+                    break;
+
+                case 4:
+                    while (true) {
+                        System.out.println("insert name of the TV show you want to remove: ");
+                        service.removeTVShow(scan.nextLine());
+
+                        System.out.println("do you want to check another book? yes/no");
+                        String ch = scan.nextLine();
+
+                        if (!ch.equals("yes")) {
+                            break;
+                        }
+                    }
+                    break;
+
+                case 5:
+                    k = false;
+                    break;
+            }
+        }
+
     }
 
     public static void userMenu(NetflixService service, User user) {
@@ -240,6 +244,7 @@ public class Main {
         }
     }
 
+
         public static ArrayList searchMovie (NetflixService service,User user){
             Scanner scan = new Scanner(System.in);
             ArrayList<Movie> result = new ArrayList<Movie>();
@@ -298,6 +303,7 @@ public class Main {
 
             return result;
         }
+
 
         public static ArrayList searchShow (NetflixService service,User user){
 
@@ -359,6 +365,7 @@ public class Main {
             return result;
         }
 
+
         public static User createAccount (NetflixService service){
             User user = new User();
             while (true) {
@@ -408,6 +415,7 @@ public class Main {
             }
         }
 
+
         public static User logIn (NetflixService service){
             Scanner scan = new Scanner(System.in);
 
@@ -442,7 +450,8 @@ public class Main {
             }
         }
 
-        public static Movie inputMovie () {
+    //get information of a movie from user and returns a Movie
+    public static Movie inputMovie () {
             Scanner scan = new Scanner(System.in);
             Movie movie = new Movie();
 
@@ -480,6 +489,7 @@ public class Main {
             return movie;
         }
 
+        //get information of a show from user and returns a TVShow
         public static TVShow inputShow () {
             Scanner scan = new Scanner(System.in);
             TVShow show = new TVShow();
