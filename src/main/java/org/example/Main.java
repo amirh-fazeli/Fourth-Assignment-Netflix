@@ -30,8 +30,8 @@ public class Main {
                 case 1:
                     k = true;
                     while (k) {
-                        System.out.println("what do you want to do? \n 1.add a movie \n 2.remove a movie");
-                        System.out.println("3.add a tv show \n 4.remove a tv show \n 5.exit");
+                        System.out.println("what do you want to do? \n 1.add a movie \n2.remove a movie");
+                        System.out.println("3.add a tv show \n4.remove a tv show \n5.exit");
 
                         System.out.println("insert an number: ");
                         int choice = Integer.valueOf(scan.nextLine());
@@ -147,7 +147,7 @@ public class Main {
         Scanner scan = new Scanner(System.in);
         boolean k = true;
         while (k) {
-            System.out.println("1.search a movie\n2.search a TV show\n3.view favorites\n4.view recommendations" +
+            System.out.println("1.search a movie\n2.search a TV show\n3.view favorites\n4.view recommendations\n" +
                     "5.log out");
             int choice = Integer.valueOf(scan.nextLine());
 
@@ -163,7 +163,7 @@ public class Main {
                         int num = Integer.valueOf(scan.nextLine());
 
                         System.out.println("what do you want to do with " + result.get(num - 1).getTitle() + "?");
-                        System.out.println("1.add to favorites\n2.like\n3.dislike");
+                        System.out.println("1.add to favorites\n2.like\n3.dislike\n4.watch");
 
                         switch (Integer.valueOf(scan.nextLine())) {
                             case 1:
@@ -177,6 +177,10 @@ public class Main {
 
                             case 3:
                                 user.dislike(result.get(num - 1).getTitle());
+                                break;
+
+                            case 4:
+                                user.watch(result.get(num - 1));
                                 break;
                         }
                     }
@@ -195,7 +199,7 @@ public class Main {
                         int num = Integer.valueOf(scan.nextLine());
 
                         System.out.println("what do you want to do with " + result.get(num - 1).getTitle() + "?");
-                        System.out.println("1.add to favorites\n2.like\n3.dislike");
+                        System.out.println("1.add to favorites\n2.like\n3.dislike\n4.watch");
 
                         switch (Integer.valueOf(scan.nextLine())) {
                             case 1:
@@ -211,6 +215,9 @@ public class Main {
                                 user.dislike(result.get(num - 1).getTitle());
                                 break;
 
+                            case 4:
+                                user.watch(result.get(num - 1));
+                                break;
                         }
                     }
 

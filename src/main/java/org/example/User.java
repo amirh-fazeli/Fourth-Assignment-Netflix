@@ -12,6 +12,7 @@ class User {
     */
 
     private ArrayList<TVShow> favoriteTVshows = new ArrayList<TVShow>();
+    private ArrayList<TVShow> watched = new ArrayList<TVShow>();
     private ArrayList<Movie> favoriteMovies = new ArrayList<Movie>();
     private ArrayList<String> liked = new ArrayList<String>();
     private ArrayList<String> disliked = new ArrayList<String>();
@@ -22,6 +23,24 @@ class User {
 
 
     public User(){}
+
+    public void watch(TVShow show){
+        Scanner scan=new Scanner(System.in);
+
+        if(!watched.contains(show)){
+            watched.add(show);
+            System.out.println("you watched " + show.getTitle());
+        }
+
+        else{
+            System.out.println("you have already watched " + show.getTitle());
+            System.out.println("do you you want to remove it from your watched list? yes/no");
+
+            if (scan.nextLine().equals("yes")){
+                watched.remove(show);
+            }
+        }
+    }
 
     public ArrayList<Movie> searchmByTitle(String title) {
         ArrayList<Movie> result=new ArrayList<Movie>();
@@ -310,8 +329,8 @@ class User {
             ArrayList<TVShow> recomSeries = service.searchtByGenre(favoriteGenres().get(i));
             ArrayList<Movie> recomMovies = service.searchmByGenre(favoriteGenres().get(i));
 
-            removeSharedMovies(recomMovies,favoriteMovies);
-            removeSharedShows(recomSeries,favoriteTVshows);
+            removeSharedMovies(recomMovies,watched);
+            removeSharedShows(recomSeries,watched);
 
             printShowArray(recomSeries);
             printMovieArray(recomMovies);
@@ -352,17 +371,17 @@ class User {
         return favoriteTVshows;
     }
 
-    public void removeSharedMovies(ArrayList<Movie> recom,ArrayList<Movie> favorites){
+    public void removeSharedMovies(ArrayList<Movie> recom, ArrayList<TVShow> watched){
         for(int i=0;i<recom.size();i++){
-            if (favorites.contains(recom.get(i))){
+            if (watched.contains(recom.get(i))){
                 recom.remove(i);
             }
         }
     }
 
-    public void removeSharedShows(ArrayList<TVShow> recom,ArrayList<TVShow> favorites){
+    public void removeSharedShows(ArrayList<TVShow> recom,ArrayList<TVShow> watched){
         for(int i=0;i<recom.size();i++){
-            if (favorites.contains(recom.get(i))){
+            if (watched.contains(recom.get(i))){
                 recom.remove(i);
             }
         }
