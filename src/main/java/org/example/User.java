@@ -302,16 +302,20 @@ class User {
         return null;
     }
 
-    public ArrayList<TVShow> getRecommendations(NetflixService service) {;
+    public void getRecommendations(NetflixService service) {;
         ArrayList<String> genres=favoriteGenres();
-        System.out.println(genres);
 
-//        for(int i=0;i<genres.size();i++){
-//            System.out.println("because you liked " + favoriteMovieWithGenre(favoriteGenres().get(i)));
-//            printShowArray(service.searchtByGenre(favoriteGenres().get(i)));
-//            printMovieArray(service.searchmByGenre(favoriteGenres().get(i)));
-//        }
-        return null;
+        for(int i=0;i<genres.size();i++){
+            System.out.println("because you liked " + favoriteMovieWithGenre(favoriteGenres().get(i)));
+            ArrayList<TVShow> recomSeries = service.searchtByGenre(favoriteGenres().get(i));
+            ArrayList<Movie> recomMovies = service.searchmByGenre(favoriteGenres().get(i));
+
+            removeSharedMovies(recomMovies,favoriteMovies);
+            removeSharedShows(recomSeries,favoriteTVshows);
+
+            printShowArray(recomSeries);
+            printMovieArray(recomMovies);
+        }
     }
 
     public boolean contain(ArrayList<String> list,String name){
@@ -346,6 +350,22 @@ class User {
 
     public ArrayList<TVShow> getFavoriteTVshows() {
         return favoriteTVshows;
+    }
+
+    public void removeSharedMovies(ArrayList<Movie> recom,ArrayList<Movie> favorites){
+        for(int i=0;i<recom.size();i++){
+            if (favorites.contains(recom.get(i))){
+                recom.remove(i);
+            }
+        }
+    }
+
+    public void removeSharedShows(ArrayList<TVShow> recom,ArrayList<TVShow> favorites){
+        for(int i=0;i<recom.size();i++){
+            if (favorites.contains(recom.get(i))){
+                recom.remove(i);
+            }
+        }
     }
 
     public void printMovieArray(ArrayList<Movie> list){
