@@ -272,14 +272,14 @@ class User {
             return null;
         } else {
             for (int i = 0; i < favoriteTVshows.size(); i++) {
-                if (!favGenres.contains(favoriteTVshows.get(i).getGenre())) {
-                    favoriteGenres().add(favoriteTVshows.get(i).getGenre());
+                if (!contain(favGenres,favoriteTVshows.get(i).getGenre())) {
+                    favGenres.add(favoriteTVshows.get(i).getGenre());
                 }
             }
 
             for (int i = 0; i < favoriteMovies.size(); i++) {
-                if (!favGenres.contains(favoriteMovies.get(i).getGenre())) {
-                    favoriteGenres().add(favoriteMovies.get(i).getGenre());
+                if (!contain(favGenres,favoriteMovies.get(i).getGenre())) {
+                    favGenres.add(favoriteMovies.get(i).getGenre());
                 }
             }
             return favGenres;
@@ -312,6 +312,16 @@ class User {
 //            printMovieArray(service.searchmByGenre(favoriteGenres().get(i)));
 //        }
         return null;
+    }
+
+    public boolean contain(ArrayList<String> list,String name){
+        for(int i=0;i<list.size();i++){
+            if(list.get(i).equals(name)){
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public void setUsername(String username) {
