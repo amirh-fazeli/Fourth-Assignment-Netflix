@@ -11,9 +11,9 @@ class User {
     *  *** NOTE: All search functions in user are for searching in favorite shows ***
     */
 
-    private ArrayList<TVShow> favoriteTVshows = new ArrayList<TVShow>();
+    public ArrayList<TVShow> favoriteTVshows = new ArrayList<TVShow>();
     private ArrayList<TVShow> watched = new ArrayList<TVShow>();
-    private ArrayList<Movie> favoriteMovies = new ArrayList<Movie>();
+    public ArrayList<Movie> favoriteMovies = new ArrayList<Movie>();
     private ArrayList<String> liked = new ArrayList<String>();
     private ArrayList<String> disliked = new ArrayList<String>();
 
@@ -297,11 +297,6 @@ class User {
     //creates a list of every genre appeared in your favorites
     public ArrayList<String> favoriteGenres() {
         ArrayList<String> favGenres = new ArrayList<String>();
-
-        if (favoriteTVshows.size() == 0 && favoriteMovies.size() == 0) {
-            System.out.println("you should pick a few favorite shows or movies to get recommendations");
-            return null;
-        } else {
             for (int i = 0; i < favoriteTVshows.size(); i++) {
                 if (!contain(favGenres,favoriteTVshows.get(i).getGenre())) {
                     favGenres.add(favoriteTVshows.get(i).getGenre());
@@ -314,7 +309,18 @@ class User {
                 }
             }
             return favGenres;
-        }
+    }
+
+    public ArrayList<String> favoriteDirectors() {
+        ArrayList<String> fav = new ArrayList<String>();
+
+
+            for (int i = 0; i < favoriteMovies.size(); i++) {
+                if (!contain(fav,favoriteMovies.get(i).getDirector())) {
+                    fav.add(favoriteMovies.get(i).getDirector());
+                }
+            }
+            return fav;
     }
 
     //returns name of a movie in your favorites with a certain genre
@@ -334,24 +340,63 @@ class User {
         return null;
     }
 
+
     //main method of recommendation
-    public void getRecommendations(NetflixService service) {;
+    public void getRecommendationsByGenre(NetflixService service) {
         ArrayList<String> genres=favoriteGenres();
+        ArrayList<TVShow> recoms=new ArrayList<TVShow>();
 
-        for(int i=0;i<genres.size();i++){
-            System.out.println("because you liked " + favoriteMovieWithGenre(favoriteGenres().get(i)));
-            ArrayList<TVShow> recomSeries = service.searchtByGenre(favoriteGenres().get(i));
-            ArrayList<Movie> recomMovies = service.searchmByGenre(favoriteGenres().get(i));
+        if (genres!=null) {
+            for (int i = 0; i < genres.size(); i++) {
+                recoms.clear();
+                for (int j=0;j<service.movieList.size();j++){
+                    if(service.movieList.get(j).getGenre().equals(genres.get(i))){
+                        if(!watched.contains(service.movieList.get(j))) {
+                            recoms.add(service.movieList.get(j));
+                        }
+                    }
+                }
 
-            removeSharedMovies(recomMovies,watched);
-            removeSharedShows(recomSeries,watched);
+                for (int k=0;k<service.tvShowList.size();k++){
+                    if(service.tvShowList.get(k).getGenre().equals(genres.get(i))){
+                        if(!watched.contains(service.tvShowList.get(k))){
+                            recoms.add(service.tvShowList.get(k));
+                        }
+                    }
+                }
 
-            printShowArray(recomSeries);
-            printMovieArray(recomMovies);
+                if(recoms.size()!=0) {
+                    System.out.println("because you liked " + favoriteMovieWithGenre(favoriteGenres().get(i)));
+                    printShowArray(recoms);
+                }
+            }
         }
     }
 
-    // .contains didn't work for some reason so i wrote this
+    public void getRecommendationsByDirector(NetflixService service) {
+        ArrayList<String> directors=favoriteDirectors();
+        ArrayList<TVShow> recoms=new ArrayList<TVShow>();
+
+        if (directors!=null) {
+            for (int i = 0; i < directors.size(); i++) {
+                recoms.clear();
+                for (int j=0;j<service.movieList.size();j++){
+                    if(service.movieList.get(j).getDirector().equals(directors.get(i))){
+                        if(!watched.contains(service.movieList.get(j))) {
+                            recoms.add(service.movieList.get(j));
+                        }
+                    }
+                }
+
+                if(recoms.size()!=0) {
+                    System.out.println("because you liked works of " + directors.get(i));
+                    printShowArray(recoms);
+                }
+            }
+        }
+    }
+
+    // .contains didn't work for some reason, so I wrote this
     public boolean contain(ArrayList<String> list,String name){
         for(int i=0;i<list.size();i++){
             if(list.get(i).equals(name)){
@@ -360,30 +405,6 @@ class User {
         }
 
         return false;
-    }
-
-    //removes watched movies from recommendation list
-    public void removeSharedMovies(ArrayList<Movie> recom, ArrayList<TVShow> watched){
-        for(int i=0;i<recom.size();i++){
-            if (watched.contains(recom.get(i))){
-                recom.remove(i);
-            }
-        }
-    }
-
-    //removes watched shows from recommendation list
-    public void removeSharedShows(ArrayList<TVShow> recom,ArrayList<TVShow> watched){
-        for(int i=0;i<recom.size();i++){
-            if (watched.contains(recom.get(i))){
-                recom.remove(i);
-            }
-        }
-    }
-
-    public void printMovieArray(ArrayList<Movie> list){
-        for(int i=0;i<list.size();i++){
-            System.out.println(list.get(i));
-        }
     }
 
     public void printShowArray(ArrayList<TVShow> list){
@@ -401,6 +422,10 @@ class User {
         this.password = password;
     }
 
+    public void setWatched(ArrayList<TVShow> watched) {
+        this.watched = watched;
+    }
+
     //GETTERS
     public String getUsername() {
         return username;
@@ -408,5 +433,9 @@ class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public ArrayList<TVShow> getWatched() {
+        return watched;
     }
 }

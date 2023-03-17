@@ -7,6 +7,7 @@ class Movie extends TVShow {
      *Movie is extended from TVShow and has extra attribute length.
      */
     private String length;
+    private String director;
 
     public Movie() {
         super();
@@ -16,13 +17,18 @@ class Movie extends TVShow {
         this.length = length;
     }
 
-    public String getLength() {
-        return length;
+    public void setDirector(String director) {
+        this.director = director;
+    }
+
+    public String getDirector() {
+        return director;
     }
 
     @Override
     public String toString() {
         return "title:'"+ title + '\'' +
+                ", director:'" + director + '\'' +
                 ", genre:'" + genre + '\'' +
                 ", year:'" + year + '\'' +
                 ", length:'" + length + '\'' +

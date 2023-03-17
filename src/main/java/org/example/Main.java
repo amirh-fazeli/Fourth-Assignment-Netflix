@@ -35,7 +35,7 @@ public class Main {
                 case 2:
                     k = true;
                     while (k) {
-                        System.out.println("1.sign up \n 2.log in\n3.exit");
+                        System.out.println("1.sign up \n2.log in\n3.exit");
 
                         System.out.println("insert an number: ");
                         int choice = Integer.valueOf(scan.nextLine());
@@ -171,6 +171,15 @@ public class Main {
 
                         switch (Integer.valueOf(scan.nextLine())) {
                             case 1:
+                                if(!user.getWatched().contains(result.get(num - 1))){
+                                    System.out.println("you don't have " + result.get(num - 1).getTitle() + " in your watched " +
+                                            "list, do you wanna add it there first? yes/no");
+
+                                    if(scan.nextLine().equals("yes")){
+                                        user.watch(result.get(num - 1));
+                                    }
+                                }
+
                                 user.addToFavoritesm(result.get(num - 1));
                                 System.out.println(result.get(num - 1).getTitle() + " added to your favorites");
                                 break;
@@ -193,34 +202,43 @@ public class Main {
 
 
                 case 2:
-                    result=searchShow(service,user);
+                    ArrayList<TVShow> result1 =searchShow(service,user);
 
-                    if(result!=null) {
-                        viewAnArrayList(result);
+                    if(result1!=null) {
+                        viewAnArrayList(result1);
 
                         System.out.println("select a show");
 
                         int num = Integer.valueOf(scan.nextLine());
 
-                        System.out.println("what do you want to do with " + result.get(num - 1).getTitle() + "?");
+                        System.out.println("what do you want to do with " + result1.get(num - 1).getTitle() + "?");
                         System.out.println("1.add to favorites\n2.like\n3.dislike\n4.watch");
 
                         switch (Integer.valueOf(scan.nextLine())) {
                             case 1:
-                                user.addToFavoritest(result.get(num - 1));
-                                System.out.println(result.get(num - 1).getTitle() + " added to your favorites");
+                                if(!user.getWatched().contains(result1.get(num - 1))){
+                                    System.out.println("you don't have " + result1.get(num - 1).getTitle() + " in your watched " +
+                                            "list, do you wanna add it there first? yes/no");
+
+                                    if(scan.nextLine().equals("yes")){
+                                        user.watch(result1.get(num - 1));
+                                    }
+                                }
+
+                                user.addToFavoritest(result1.get(num - 1));
+                                System.out.println(result1.get(num - 1).getTitle() + " added to your favorites");
                                 break;
 
                             case 2:
-                                user.like(result.get(num - 1).getTitle());
+                                user.like(result1.get(num - 1).getTitle());
                                 break;
 
                             case 3:
-                                user.dislike(result.get(num - 1).getTitle());
+                                user.dislike(result1.get(num - 1).getTitle());
                                 break;
 
                             case 4:
-                                user.watch(result.get(num - 1));
+                                user.watch(result1.get(num - 1));
                                 break;
                         }
                     }
@@ -233,7 +251,15 @@ public class Main {
 
 
                 case 4:
-                    user.getRecommendations(service);
+                    if (user.favoriteTVshows.size() == 0 && user.favoriteMovies.size() == 0) {
+                        System.out.println("you should pick a few favorite shows or movies to get recommendations");
+                    }
+
+                    else {
+                        user.getRecommendationsByGenre(service);
+                        user.getRecommendationsByDirector(service);
+                    }
+
                     break;
 
                 case 5:
@@ -398,7 +424,7 @@ public class Main {
                         String password = scan.nextLine();
                         String passPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$";
                         if (!password.matches(passPattern)) {
-                            System.out.println("your password should at least eight characters," +
+                            System.out.println("your password should at least consist of eight characters," +
                                     " one uppercase letter, one lowercase letter and one number");
                         } else {
                             System.out.println("re-enter your password");
@@ -459,6 +485,9 @@ public class Main {
 
             System.out.println("name: ");
             movie.setTitle(scan.nextLine());
+
+            System.out.println("director: ");
+            movie.setDirector(scan.nextLine());
 
             System.out.println("genre: ");
             movie.setGenre(scan.nextLine());
