@@ -311,6 +311,7 @@ class User {
             return favGenres;
     }
 
+    //creates a list of every genre appeared in your favorites
     public ArrayList<String> favoriteDirectors() {
         ArrayList<String> fav = new ArrayList<String>();
 
@@ -341,7 +342,7 @@ class User {
     }
 
 
-    //main method of recommendation
+    //main methods of recommendation
     public void getRecommendationsByGenre(NetflixService service) {
         ArrayList<String> genres=favoriteGenres();
         ArrayList<TVShow> recoms=new ArrayList<TVShow>();
